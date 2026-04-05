@@ -2,7 +2,7 @@
 
 > Fine-tuning Microsoft Phi-3 Mini for credit default prediction and evaluating its robustness against adversarial attacks.
 
-**Author:** Vin | [GitHub](https://github.com/vupperla)  
+**Author:** Vinay Upperla | [GitHub](https://github.com/vupperla)  
 **Type:** Independent Study — Master of Science in Cybersecurity Engineering  
 **Institution:** University of Washington  
 **Year:** 2025 – 2026  
