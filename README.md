@@ -18,18 +18,17 @@ This project is a two-part independent study exploring the security vulnerabilit
 
 ## Project Structure
 
-phi3-adversarial-robustness/
-│
-├── README.md
-├── requirements.txt
-│
-├── part1_finetuning/
-│   └── phi3_credit_finetuning.ipynb        # Fine-tuning Phi-3 Mini with QLoRA
-│
-└── part2_adversarial/
-├── label_flip_attack.ipynb             # Label flip poisoning attack + Isolation Forest defense
-└── zoo_attack.ipynb                    # ZOO black-box attack + consistency-based defense
-
+    phi3-adversarial-robustness/
+    │
+    ├── README.md
+    ├── requirements.txt
+    │
+    ├── part1_finetuning/
+    │   └── phi3_credit_finetuning.ipynb
+    │
+    └── part2_adversarial/
+        ├── label_flip_attack.ipynb
+        └── zoo_attack.ipynb
 ---
 
 ## Part 1 — Fine-Tuning Phi-3 Mini
