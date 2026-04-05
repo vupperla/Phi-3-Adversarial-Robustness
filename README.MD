@@ -2,11 +2,11 @@
 
 > Fine-tuning Microsoft Phi-3 Mini for credit default prediction and evaluating its robustness against adversarial attacks.
 
-Author: Vinay Upperla | [GitHub](https://github.com/vupperla)  
-Type: Independent Study — Master of Science in Cybersecurity Engineering  
-Institution: University of Washington  
-Year: 2025 – 2026  
-Advisor: Dr. Brent Lagesse
+**Author:** Vin | [GitHub](https://github.com/vupperla)  
+**Type:** Independent Study — Master of Science in Cybersecurity Engineering  
+**Institution:** University of Washington  
+**Year:** 2025 – 2026  
+**Advisor:** Dr. Brent Lagesse
 
 ---
 
@@ -16,13 +16,12 @@ This project is a two-part independent study exploring the security vulnerabilit
 
 **Part 1** covers fine-tuning Microsoft Phi-3 Mini (3.8B parameters) on the UCI Credit Card Default dataset using QLoRA — a parameter-efficient fine-tuning method that updates only 0.08% of model parameters.
 
-**Part 2** evaluates the fine-tuned model's robustness against two adversarial attacks — a data poisoning attack and a black-box inference attack — and implements defenses against each.
+**Part 2** builds on Part 1 by evaluating the fine-tuned model's robustness against two adversarial attacks — a label flip data poisoning attack and a black-box ZOO inference attack — and implements defenses against each.
 
 ---
 
 ## Project Structure
 
-```
 phi3-adversarial-robustness/
 │
 ├── README.md
@@ -31,15 +30,9 @@ phi3-adversarial-robustness/
 ├── part1_finetuning/
 │   └── phi3_credit_finetuning.ipynb        # Fine-tuning Phi-3 Mini with QLoRA
 │
-├── part2_adversarial/
-│   ├── label_flip_attack.ipynb             # Label flip data poisoning attack
-│   ├── zoo_attack.ipynb                    # ZOO black-box inference attack
-│   └── defenses.ipynb                      # Isolation Forest + consistency defense
-│
-└── reports/
-    ├── Independent_Study_Part1.pdf
-    └── Independent_Study_Part2.pdf
-```
+└── part2_adversarial/
+├── label_flip_attack.ipynb             # Label flip poisoning attack + Isolation Forest defense
+└── zoo_attack.ipynb                    # ZOO black-box attack + consistency-based defense
 
 ---
 
@@ -66,7 +59,7 @@ phi3-adversarial-robustness/
 ## Part 2 — Adversarial Attacks & Defenses
 
 ### Attack 1: Label Flip Poisoning
-Flips 35% of training labels before fine-tuning to corrupt model evaluation.
+Flips 35% of training labels to corrupt model evaluation without touching the model itself.
 
 | Metric | Clean | Poisoned | Drop |
 |--------|-------|----------|------|
@@ -85,7 +78,7 @@ Anomaly detection on training data to identify and remove poisoned samples befor
 ---
 
 ### Attack 2: ZOO (Zeroth Order Optimization) Black-Box Attack
-Uses IBM's Adversarial Robustness Toolbox (ART) to flip predictions from "Default" to "No Default" by making small, iterative input modifications — without access to model weights.
+Uses IBM's Adversarial Robustness Toolbox (ART) to flip predictions from "Default" to "No Default" by making small iterative input modifications — without access to model weights.
 
 | Metric | Result |
 |--------|--------|
@@ -104,10 +97,10 @@ Tracks per-client submission history and rejects repeated, slightly modified inp
 
 ## Key Findings
 
-- Fine-tuned LLMs are highly vulnerable to adversarial attacks, even with small perturbations
+- Fine-tuned LLMs are highly vulnerable to adversarial attacks even with small perturbations
 - Label flip poisoning caused a 23.8% accuracy drop with only 35% label corruption
 - ZOO achieved 100% targeted misclassification before defenses were applied
-- No single defense eliminates adversarial risk — layered defenses are necessary
+- No single defense fully eliminates adversarial risk — layered defenses are necessary
 - Isolation Forest recovered 17.4% accuracy against poisoning
 - Consistency-based rate limiting blocked 55% of ZOO attacks
 
@@ -123,12 +116,11 @@ Tracks per-client submission history and rejects repeated, slightly modified inp
 | Defenses | Isolation Forest (scikit-learn), custom consistency checker |
 | Training | Google Colab Pro, A100 GPU, BitsAndBytes |
 | Languages | Python |
-| Libraries | PyTorch, Pandas, NumPy, Matplotlib |
+| Libraries | PyTorch, Pandas, NumPy, Matplotlib, scikit-learn |
 
 ---
 
 ## Setup & Requirements
-
 ```bash
 # Clone the repository
 git clone https://github.com/vupperla/phi3-adversarial-robustness.git
@@ -138,20 +130,7 @@ cd phi3-adversarial-robustness
 pip install -r requirements.txt
 ```
 
-**requirements.txt includes:**
-```
-transformers
-peft
-trl
-bitsandbytes
-datasets
-torch
-scikit-learn
-pandas
-numpy
-matplotlib
-adversarial-robustness-toolbox
-```
+> **Note:** Notebooks were developed on Google Colab Pro with an A100 GPU. Update the Google Drive mount paths in each notebook to match your own Drive directory before running.
 
 > **Note:** Training requires a GPU with at least 16GB VRAM. Google Colab Pro with A100 is recommended.
 
